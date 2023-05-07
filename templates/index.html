@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistem Penilaian Esai Otomatis</title>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+    <style>
+        body{
+            background-color: white;
+        }
+
+        .heroes {
+            height: 700px;
+            background-image: url("{% static 'img/background.jpg' %}");
+            background-size: cover;
+            padding-top: 200px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="text-center heroes">
+      <h1 class="display-5 fw-bold text-warning">Sistem Penilaian Esai Otomatis</h1>
+      <div class="col-lg-6 mx-auto text-light">
+        <p class="lead mb-4">
+          Sistem ini dibuat menggunakan Algoritma Rabin Karp dalam string matching serta menggunakan pendekatan Synonym Recognition untuk mengurangi error yang didapat
+        </p>
+        <div class="container">
+          <div class="row justify-content-around">
+            <div class="col-4">
+              <a href="{% url 'scoring:inputjumlahsoal' %}"><button type="button" class="btn btn-primary btn-lg px-4">Single Student Scoring</button></a>
+            </div>
+            <div class="col-4">
+              <a href="{% url 'scoring:uploadkunci' %}"><button type="button" class="btn btn-warning btn-lg px-4">Multiple Student Scoring</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

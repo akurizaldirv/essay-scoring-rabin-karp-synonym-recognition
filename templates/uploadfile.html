@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container p-5">
+        <h2 class="mb-3 fw-bolder">Multi Student Scoring</h2>
+        <h3>{{ heading }}</h3>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <!-- <p>Unggah data penilaian jawaban siswa (jenis berkas: excel) :</p>
+          <input type="file" name="file" class="form-control mb-3">
+          <input type="submit" name="Submit" class="btn btn-primary"> -->
+
+          {{ form }}
+
+          {% if error %}
+          {{ message }}
+          <br>
+          {% endif %}
+
+          <input type="submit" name="Submit" class="btn btn-primary mt-2">
+        </form>
+    </div>
+{% endblock content %}

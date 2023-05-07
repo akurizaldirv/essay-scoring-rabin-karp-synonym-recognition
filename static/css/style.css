@@ -1,0 +1,25 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  body{
+      background-color: white;
+  }
+
+  .heroes {
+       height: 700px;
+      background-image: url("assets/img/bgsepatu.jpg");
+      background-size: cover;
+      padding-top: 200px;
+  }
+
+  .container-form-login{
+      height: 350px;
+      margin: 200px auto;
+      padding: 25px;
+      border-radius: 25px;
+  }

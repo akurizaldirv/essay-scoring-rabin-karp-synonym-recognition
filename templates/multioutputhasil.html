@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container p-5">
+      <h2 class="fw-bolder">Single Student Scoring</h2>
+
+      <h3>Hasil Penilaian Esai Otomatis menggunakan Metode Rabin Karp</h3>
+      <table class="table">
+        <tr>
+          <td>Nilai K</td>
+          <td>: {{ kValue }}</td>
+        </tr>
+        <tr>
+          <td>Nilai b</td>
+          <td>: {{ bValue }}</td>
+        </tr>
+        <tr>
+          <td>Synonym Recognition</td>
+          <td>: {{ synonym }}</td>
+        </tr>
+        <tr>
+          <td>Waktu Eksekusi</td>
+          <td>: {{ timer }}</td>
+        </tr>
+      </table>
+      
+      <div class="table-responsive mt-5">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">No. Siswa</th>
+              <th scope="col">Nama Siswa</th>
+              <th scope="col">b = 2</th>
+              <th scope="col">b = 3</th>
+              <th scope="col">b = 5</th>
+              <th scope="col">b = 7</th>
+              <th scope="col">b = 11</th>
+              <th scope="col">b = 13</th>
+              <th scope="col">b = 17</th>
+              <th scope="col">b = 19</th>
+              <th scope="col">b = 23</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a, b in data %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{ a }}</td>
+              <td>{{ b }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+{% endblock content %}

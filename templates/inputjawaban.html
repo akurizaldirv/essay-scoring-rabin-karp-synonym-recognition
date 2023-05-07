@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container p-5">
+        <h2 class="mb-3 fw-bolder">Single Student Scoring</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <label for="nama" class="form-label">Masukkan Nama Siswa</label>
+          <input type="text" name="nama" id="nama" class="form-control mb-4">
+          <p>Masukkan Jawaban Siswa Sesuai Nomor:</p>
+          {% for j in range %}
+          <div class="row mb-3">
+            <div class="input-group">
+              <div class="input-group-text">{{ j }}</div>
+              <textarea name="jawabansiswa" id="jawabansiswa" class="form-control" rows="1" placeholder="Kunci Jawaban" required></textarea>
+            </div>
+          </div>
+          {% endfor %}
+          <input type="submit" name="Submit" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock content %}
