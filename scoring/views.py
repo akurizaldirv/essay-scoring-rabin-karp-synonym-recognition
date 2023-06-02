@@ -16,6 +16,7 @@ from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 import pandas as pd
 import json
 
+
 #import stoplist dan menyimpan ke variabel stopword_list
 f = default_storage.open("static/ScoringData/Modification Stoplist.txt")
 stopword_list = []
@@ -32,6 +33,7 @@ def load(filename):
     return data
 
 tesaurus = load("static/ScoringData/Modification Dict.json")
+kataBiologi = ['populasi', 'komunitas', 'jaringan', 'individu', 'organisme']
 
 # membuat stemmer untuk preprocessing
 factory = StemmerFactory()
@@ -53,7 +55,8 @@ class ScoringSystem:
     def preprocessing(self, teks):
 
         # Menghapus tanda baca
-        hasilCleaning = re.sub(r'[^0-9a-zA-Z ]', ' ', str(teks))
+        noURL = re.sub(r'http\S+', ' ', teks)
+        hasilCleaning = re.sub(r'[^0-9a-zA-Z ]', ' ', noURL)
 
         # Case Folding
         hasilCaseFold = hasilCleaning.lower()
@@ -88,7 +91,7 @@ class ScoringSystem:
 
     def synonymRecognition(self, dict, tokens):
         for i in range(0, len(tokens)):
-            if tokens[i] not in dict:
+            if tokens[i] not in dict and tokens[i] not in kataBiologi:
                 for j in dict:
                     if tokens[i] in dict[j]:
                         tokens[i] = j
@@ -419,14 +422,6 @@ def UploadKunci(request):
                     kunci = y['Kunci'],
                     bobot = y['Bobot'],
                 )
-            # nomor = 0
-            # for x,y in dataKunci.items():
-            #     nomor += 1
-            #     KunciJawaban.objects.create(
-            #         nomor = nomor,
-            #         kunci = y[0],
-            #         bobot = 10,
-            #     )
 
             return redirect("scoring:uploadjawaban")
 
@@ -564,27 +559,6 @@ def MultiOutputHasil(request):
         hasilPenilaian = scoringSystem.penilaian()
 
         dataContext.append([namaSiswa, hasilPenilaian[1]])
-
-        # scoringSystem2 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 2, True)
-        # hasilPenilaian2 = scoringSystem2.penilaian()
-        # scoringSystem3 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 3, True)
-        # hasilPenilaian3 = scoringSystem3.penilaian()
-        # scoringSystem5 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 5, True)
-        # hasilPenilaian5 = scoringSystem5.penilaian()
-        # scoringSystem7 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 7, True)
-        # hasilPenilaian7 = scoringSystem7.penilaian()
-        # scoringSystem11 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 11, True)
-        # hasilPenilaian11 = scoringSystem11.penilaian()
-        # scoringSystem13 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 13, True)
-        # hasilPenilaian13 = scoringSystem13.penilaian()
-        # scoringSystem17 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 17, True)
-        # hasilPenilaian17 = scoringSystem17.penilaian()
-        # scoringSystem19 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 19, True)
-        # hasilPenilaian19 = scoringSystem19.penilaian()
-        # scoringSystem23 = ScoringSystem(dataKunci, dataJawaban, dataBobot, 9, 23, True)
-        # hasilPenilaian23 = scoringSystem23.penilaian()
-
-        # dataContext.append([namaSiswa, hasilPenilaian2[1], hasilPenilaian3[1], hasilPenilaian5[1], hasilPenilaian7[1], hasilPenilaian11[1], hasilPenilaian13[1], hasilPenilaian17[1], hasilPenilaian19[1], hasilPenilaian23[1]])
 
 
     # end timer
