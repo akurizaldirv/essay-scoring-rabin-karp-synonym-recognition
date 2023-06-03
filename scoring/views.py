@@ -33,7 +33,7 @@ def load(filename):
     return data
 
 tesaurus = load("static/ScoringData/Modification Dict.json")
-kataBiologi = ['populasi', 'komunitas', 'jaringan', 'individu', 'organisme']
+kataBiologi = ['makhluk', 'rangsang', 'migrasi', 'tingkah', 'laku', 'organisme', 'karbon', 'oksigen']
 
 # membuat stemmer untuk preprocessing
 factory = StemmerFactory()
