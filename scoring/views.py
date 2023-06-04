@@ -94,69 +94,58 @@ class ScoringSystem:
             if tokens[i] not in dict and tokens[i] not in kataBiologi:
                 for j in dict:
                     if tokens[i] in dict[j]:
-                        tokens[i] = j
-                    
-        
+                        tokens[i] = j      
         return tokens
 
     def parsingKGram(self, tokens, kValue):
         hasilKGram = []
-        for i in range(0, len("".join(tokens))-kValue+1):
-            hasilKGram.append("".join(tokens)[i:i+kValue])
-            
+        longstr = "".join(tokens) 
+        if len(longstr) >= kValue:        
+            for i in range(0, len(longstr)-kValue+1):
+                hasilKGram.append(longstr[i:i+kValue])
         return hasilKGram
 
     def hashFunction(self, tokens, k, b):
         # Menyimpan array Hash Value
         hashValue = []
-        
-        # Hashing Pertama
-        hashV = 0
-        for i in range(0, len(tokens[0])):
-            z = ord(tokens[0][i]) * (b**(k-(i+1)))
-            hashV += z
-        hashValue.append(hashV)
-        
-        # Hashing menggunakan Rolling Hash without Modulo
-        for j in range(0, len(tokens[1:])):
-            z = (hashValue[j] - ord(tokens[j][0]) * b**(k-1)) * b + ord(tokens[j+1][-1:])
-            hashValue.append(z)
+        if len(tokens) != 0:
+            # Hashing Pertama
+            hashV = 0
+            for i in range(0, len(tokens[0])):
+                z = ord(tokens[0][i]) * (b**(k-(i+1)))
+                hashV += z
+            hashValue.append(hashV)
+
+            # Hashing menggunakan Rolling Hash without Modulo
+            for j in range(0, len(tokens[1:])):
+                z = (hashValue[j] - ord(tokens[j][0]) * b**(k-1)) * b + ord(tokens[j+1][-1:])
+                hashValue.append(z)
         return hashValue
 
     def fingerprintExtraction(self, arr):
         return list(set(arr))
 
     def DiceSC(self, arr1, arr2):
-        # arr1 = Kunci Jawaban
-        # arr2 = Jawaban Siswa
         samePattern = []
         for i in range(0, len(arr2)):
             for j in range(0, len(arr1)):
                 if arr1[j] == arr2[i]:
-                    samePattern.append(arr1[j])
-                        
+                    samePattern.append(arr1[j]) 
+        if (len(arr1)+len(arr2)) == 0:
+            return 0   
         similarity = (2*len(samePattern))/(len(arr1) + len(arr2))
         similarity = round(similarity, 2)
         return similarity
 
     def penilaian(self):
-        arrKunci = self.arrKunci
-        arrJawaban = self.arrJawaban
-        arrBobot = self.arrBobot
-
-        k = self.k
-        b = self.b
-        sr = self.sr
+        arrKunci, arrJawaban, arrBobot = self.arrKunci, self.arrJawaban, self.arrBobot
+        k, b, sr = self.k, self.b, self.sr
 
         arrSim = []
-
         for i in range(0, len(arrKunci)):
             arrSim.append(self.penilaianSoal(arrKunci[i], arrJawaban[i], k, b, sr))
-
         self.nilaiSiswa = self.penilaianSiswa(arrSim, arrBobot)
-
         return arrSim, self.nilaiSiswa
-        # return arrSim
 
     def penilaianSiswa(self, arrSim, arrBobot):
         nilaiSiswa = 0
